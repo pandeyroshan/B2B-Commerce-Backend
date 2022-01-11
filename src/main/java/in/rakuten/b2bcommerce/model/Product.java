@@ -20,9 +20,7 @@ public class Product {
 	
 	private Double price;
 	
-	private Integer quantity;
+	private Integer inStockQuantity;
 	
-	@ManyToOne
-	@JoinColumn(name="business_id")
-	private Business business;
+	private Boolean active;
 }

@@ -11,20 +11,24 @@ import lombok.Data;
 
 @Entity
 @Data
-public class PurchaseDetail {
+public class Address {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name="order_id")
-	private OrderSummary orderSummary;
+	@JoinColumn(name="business_id")
+	private Business business;
 	
-	@ManyToOne
-	@JoinColumn(name="product_id")
-	private Product product;
+	private String contactPersonName;
 	
-	private Integer quantityOrdered;
+	private String contactPersonPhoneNumber;
 	
-	private Integer totalCost;
+	private String addressLine1;
+	private String addressLine2;
+	private String addressLine3;
+	
+	private String pincode;
+	private String city;
+	private String country;
 }

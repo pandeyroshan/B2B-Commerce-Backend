@@ -22,12 +22,8 @@ public class OrderSummary {
 	private Integer id;
 	
 	@OneToOne
-	@JoinColumn(name="user_id")
-	private User user;
-	
-	@OneToOne
-	@JoinColumn(name="business_id")
-	private Business business;
+	@JoinColumn(name="ordered_by")
+	private Business orderedBy;
 	
 	private Date timestamp;
 	
@@ -35,4 +31,8 @@ public class OrderSummary {
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
+	
+	@OneToOne
+	@JoinColumn(name="address_id")
+	private Address address;
 }
