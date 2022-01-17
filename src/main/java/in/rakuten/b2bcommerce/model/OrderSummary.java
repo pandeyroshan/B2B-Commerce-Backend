@@ -35,4 +35,18 @@ public class OrderSummary {
 	@OneToOne
 	@JoinColumn(name="address_id")
 	private Address address;
+
+	public OrderSummary() {
+		super();
+	}
+
+	public OrderSummary(Business orderedBy, Date timestamp, Double totalCost, OrderStatus orderStatus,
+			Address address) {
+		super();
+		this.orderedBy = orderedBy;
+		this.timestamp = timestamp;
+		this.totalCost = totalCost;
+		this.orderStatus = orderStatus;
+		this.address = address;
+	}
 }
