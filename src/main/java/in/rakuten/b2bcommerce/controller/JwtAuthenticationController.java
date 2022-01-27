@@ -7,12 +7,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.rakuten.b2bcommerce.model.JwtRequest;
-import in.rakuten.b2bcommerce.model.JwtResponse;
+import in.rakuten.b2bcommerce.dto.JwtRequest;
+import in.rakuten.b2bcommerce.dto.JwtResponse;
 import in.rakuten.b2bcommerce.service.JwtUserDetailsService;
 import in.rakuten.b2bcommerce.utils.JwtTokenUtil;
 

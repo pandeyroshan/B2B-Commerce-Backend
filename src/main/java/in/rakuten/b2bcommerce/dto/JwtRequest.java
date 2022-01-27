@@ -1,4 +1,4 @@
-package in.rakuten.b2bcommerce.model;
+package in.rakuten.b2bcommerce.dto;
 
 import java.io.Serializable;
 
