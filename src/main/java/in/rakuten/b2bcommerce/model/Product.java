@@ -20,5 +20,7 @@ public class Product {
 	
 	private Integer inStockQuantity;
 	
+	private String imageLink;
+	
 	private Boolean active;
 }

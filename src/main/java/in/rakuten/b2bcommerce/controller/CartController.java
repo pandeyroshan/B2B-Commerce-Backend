@@ -3,6 +3,8 @@ package in.rakuten.b2bcommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +16,9 @@ import in.rakuten.b2bcommerce.model.CartProduct;
 import in.rakuten.b2bcommerce.service.CartProductService;
 import in.rakuten.b2bcommerce.service.CartService;
 
+
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 	
 	@Autowired
@@ -23,23 +27,22 @@ public class CartController {
 	CartProductService cartProductService;
 	
 	@PostMapping("/add-to-cart")
-	private void addToCart(@RequestBody cartProductDetail cartProductDetail) {
+	public void addToCart(@RequestBody cartProductDetail cartProductDetail) {
 		cartService.addToCart(cartProductDetail);
 	}
 	
 	@PostMapping("/remove-from-cart")
-	private void removeFromCart(@RequestBody cartProductDetail cartProductDetail) {
+	public void removeFromCart(@RequestBody cartProductDetail cartProductDetail) {
 		cartService.removeFromCart(cartProductDetail);
 	}
 	
 	@PostMapping("/manage-quantity")
-	private void increaseProductQuantityInCart(@RequestBody ProductQuantityInCart productQuantityInCart) {
+	public void increaseProductQuantityInCart(@RequestBody ProductQuantityInCart productQuantityInCart) {
 		cartProductService.increaseProductQuantityInCart(productQuantityInCart);
 	}
 	
-	@PostMapping("/cart-details/{user_id}")
-	private List<CartProduct> getCartDetails(@PathVariable("user_id") Integer userId) {
-		List<CartProduct> cartProductByUserId = cartProductService.getCartProductByUserId(userId);
-		return cartProductByUserId;
+	@GetMapping("/cart-details/{user_id}")
+	public List<CartProduct> getCartDetails(@PathVariable("user_id") Integer userId) {
+		return cartProductService.getCartProductByUserId(userId);
 	}
 }

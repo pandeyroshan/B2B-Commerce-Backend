@@ -67,11 +67,16 @@ public class OrderSummaryService {
 		return orderSummary.getId();
 	}
 	
+	public List<OrderSummary> getMyOrders(Integer businessId) {
+		List<OrderSummary> allOrderSummaryByBusinessId = this.orderSummaryRepository.findAllOrderSummaryByOrderedBy(businessId);
+		return allOrderSummaryByBusinessId;
+	}
+	
 	public void cancelOrder(Integer orderId) {
 		OrderSummary orderSummary = orderSummaryRepository.getById(orderId);
 		orderSummary.setOrderStatus(OrderStatus.CANCELLED);
 		
-		OrderSummary save = orderSummaryRepository.save(orderSummary);
+		orderSummaryRepository.save(orderSummary);
 	}
 	
 	public OrderSummary getOrderSummary(Integer orderId) {

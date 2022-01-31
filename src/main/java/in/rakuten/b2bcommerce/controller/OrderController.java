@@ -3,18 +3,21 @@ package in.rakuten.b2bcommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.rakuten.b2bcommerce.dto.BusinessId;
 import in.rakuten.b2bcommerce.dto.OrderSummaryDetail;
 import in.rakuten.b2bcommerce.model.OrderSummary;
 import in.rakuten.b2bcommerce.model.PurchaseDetail;
 import in.rakuten.b2bcommerce.service.OrderSummaryService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 	
 	@Autowired
@@ -22,9 +25,12 @@ public class OrderController {
 	
 	@PostMapping("/place-order")
 	public Integer placeOrder(@RequestBody OrderSummaryDetail orderSummaryDetail) {
-		Integer placeOrderId = orderSummaryService.placeOrder(orderSummaryDetail);
-		
-		return placeOrderId;
+		return orderSummaryService.placeOrder(orderSummaryDetail);
+	}
+	
+	@PostMapping("/my-orders")
+	public List<OrderSummary> getMyOrders(@RequestBody BusinessId businessId) {
+		return this.orderSummaryService.getMyOrders(businessId.getBusinessId());
 	}
 	
 	@GetMapping("/cancel-order/{order_id}")
@@ -34,13 +40,11 @@ public class OrderController {
 	
 	@GetMapping("/order-details/{order_id}")
 	public OrderSummary getOrderDetails(@PathVariable("order_id") Integer orderId) {
-		OrderSummary orderSummary = orderSummaryService.getOrderSummary(orderId);
-		return orderSummary;
+		return orderSummaryService.getOrderSummary(orderId);
 	}
 	
 	@GetMapping("/purchase-details/{order_id}")
 	public List<PurchaseDetail> getPurchaseDetails(@PathVariable("order_id") Integer orderId) {
-		List<PurchaseDetail> purchaseDetailByOrderId = orderSummaryService.getPurchaseDetailByOrderId(orderId);
-		return purchaseDetailByOrderId;
+		return orderSummaryService.getPurchaseDetailByOrderId(orderId);
 	}
 }

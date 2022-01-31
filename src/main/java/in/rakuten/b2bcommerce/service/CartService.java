@@ -1,7 +1,5 @@
 package in.rakuten.b2bcommerce.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,12 +34,9 @@ public class CartService {
 	}
 	
 	public void removeFromCart(cartProductDetail cartProductDetail) {
-		Cart cart = cartRepository.getById(cartProductDetail.getCartId());
 		
 		CartProduct cartProductByCartIdAndProductId = cartProductRepository.getCartProductByCartIdAndProductId(cartProductDetail.getCartId(), cartProductDetail.getProductId());
 		
 		cartProductRepository.deleteById(cartProductByCartIdAndProductId.getId());
-		
-		cartRepository.save(cart);
 	}
 }

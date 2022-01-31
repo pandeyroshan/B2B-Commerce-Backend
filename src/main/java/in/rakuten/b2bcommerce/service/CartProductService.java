@@ -41,7 +41,8 @@ public class CartProductService {
 	
 	@Transactional
 	public void increaseProductQuantityInCart(ProductQuantityInCart productQuantityInCart) {
-		cartProductRepository.increaseProductQuantityInCart(productQuantityInCart.getCartId(), productQuantityInCart.getProductId(), productQuantityInCart.getIncrementValue());
+		Integer productQuantityOfProductInCart = cartProductRepository.getProductQuantityOfProductInCart(productQuantityInCart.getCartId(), productQuantityInCart.getProductId());
+		cartProductRepository.increaseProductQuantityInCart(productQuantityInCart.getCartId(), productQuantityInCart.getProductId(), productQuantityOfProductInCart + productQuantityInCart.getIncrementValue());
 	}
 	
 	public List<CartProduct> getCartProductByUserId(int userId) {
