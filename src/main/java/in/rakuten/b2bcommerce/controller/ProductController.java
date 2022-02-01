@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.rakuten.b2bcommerce.dto.ProductDetail;
 import in.rakuten.b2bcommerce.model.Product;
 import in.rakuten.b2bcommerce.service.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -30,9 +31,9 @@ public class ProductController {
 		return product.getId();
 	}
 
-	@GetMapping("/all-products")
-	public List<Product> getAllProduct() {
-		return productService.getAllProducts();
+	@GetMapping("/all-products/{user_id}")
+	public List<ProductDetail> getAllProduct(@PathVariable("user_id") Integer userId) {
+		return productService.getAllProducts(userId);
 	}
 	
 	@GetMapping("/product/{productId}")

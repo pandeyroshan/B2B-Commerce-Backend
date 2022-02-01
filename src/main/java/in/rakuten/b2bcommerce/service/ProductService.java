@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import in.rakuten.b2bcommerce.dto.ProductDetail;
+import in.rakuten.b2bcommerce.model.CartProduct;
 import in.rakuten.b2bcommerce.model.Product;
 import in.rakuten.b2bcommerce.repository.ProductRepository;
 
@@ -15,14 +17,53 @@ public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
 	
+	@Autowired
+	CartProductService cartProductService;
+	
 	public void saveOrUpdate(Product product) {
 		productRepository.save(product);
 	}
 	
-	public List<Product> getAllProducts() {
+	public List<ProductDetail> getAllProducts(Integer userId) {
 		List<Product> allProducts = new ArrayList<Product>();
+		List<Product> myProducts = new ArrayList<Product>();
+		List<ProductDetail> allProductDetails = new ArrayList<ProductDetail>();
+		
 		productRepository.findAll().forEach(product -> allProducts.add(product));
-		return allProducts;
+		
+		List<CartProduct> cartProductsByUserId = cartProductService.getCartProductByUserId(userId);
+		
+		
+		cartProductsByUserId.forEach(cartProduct -> myProducts.add(cartProduct.getProduct()));
+		
+		for(Product product: allProducts) {
+			if(myProducts.contains(product)) {
+				allProductDetails.add(
+						new ProductDetail(
+								product.getId(),
+								product.getName(),
+								product.getPrice(),
+								product.getInStockQuantity(),
+								product.getImageLink(),
+								product.getActive(),
+								true
+						)
+				);
+			} else {
+				allProductDetails.add(
+						new ProductDetail(
+								product.getId(),
+								product.getName(),
+								product.getPrice(),
+								product.getInStockQuantity(),
+								product.getImageLink(),
+								product.getActive(),
+								false
+						)
+				);
+			}
+		}
+		return allProductDetails;
 	}
 	
 	public Product getProductById(int productId) {
