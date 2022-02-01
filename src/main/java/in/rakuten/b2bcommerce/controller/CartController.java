@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import in.rakuten.b2bcommerce.dto.ItemCount;
 import in.rakuten.b2bcommerce.dto.ProductQuantityInCart;
 import in.rakuten.b2bcommerce.dto.cartProductDetail;
 import in.rakuten.b2bcommerce.model.CartProduct;
@@ -44,5 +45,10 @@ public class CartController {
 	@GetMapping("/cart-details/{user_id}")
 	public List<CartProduct> getCartDetails(@PathVariable("user_id") Integer userId) {
 		return cartProductService.getCartProductByUserId(userId);
+	}
+	
+	@GetMapping("/total-item-in-cart/{cart_id}")
+	public ItemCount getTotalNumberOfItemsInCart(@PathVariable("cart_id") Integer cartId) {
+		return cartProductService.getTotalNumberOfItemsInCart(cartId);
 	}
 }

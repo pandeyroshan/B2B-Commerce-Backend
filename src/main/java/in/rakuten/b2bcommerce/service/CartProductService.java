@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import in.rakuten.b2bcommerce.dto.ItemCount;
 import in.rakuten.b2bcommerce.dto.OrderSummaryDetail;
 import in.rakuten.b2bcommerce.dto.ProductQuantityInCart;
 import in.rakuten.b2bcommerce.model.Cart;
@@ -60,5 +61,9 @@ public class CartProductService {
 			PurchaseDetail purchaseDetail = new PurchaseDetail(orderSummary, cartProduct.getProduct(), cartProduct.getTotalQuantity(), cartProduct.getTotalQuantity()*cartProduct.getProduct().getPrice()*1.0);
 			purchaseDetailRepository.save(purchaseDetail);
 		}
+	}
+	
+	public ItemCount getTotalNumberOfItemsInCart(Integer cartId) {
+		return new ItemCount(cartProductRepository.getTotalNumberOfItemsInCart(cartId));
 	}
 }

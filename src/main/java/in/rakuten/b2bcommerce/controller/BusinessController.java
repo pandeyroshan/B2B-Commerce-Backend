@@ -29,6 +29,7 @@ public class BusinessController {
 
 	@PostMapping("/update-business")
 	public void updateBusiness(@RequestBody BusinessUpdateDetail businessUpdateDetail) {
+		System.out.println("\n\n\nUPDATE CONTROLLER\n\n\n");
 		businessService.updateBusinessName(businessUpdateDetail);
 	}
 

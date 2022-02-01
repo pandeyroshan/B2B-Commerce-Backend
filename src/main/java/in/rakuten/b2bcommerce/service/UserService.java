@@ -1,6 +1,7 @@
 package in.rakuten.b2bcommerce.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import in.rakuten.b2bcommerce.dto.BusinessDetail;
@@ -10,6 +11,7 @@ import in.rakuten.b2bcommerce.repository.BusinessRepository;
 import in.rakuten.b2bcommerce.repository.CartRepository;
 import in.rakuten.b2bcommerce.repository.UserRepository;
 import in.rakuten.b2bcommerce.utils.JwtTokenUtil;
+import in.rakuten.b2bcommerce.dto.Role;
 
 @Service
 public class UserService {
@@ -30,14 +32,14 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	public String getUserRoleFromJwtToken(String token) {
+	public Role getUserRoleFromJwtToken(String token) {
 		String username = this.jwtTokenUtil.getUsernameFromToken(token);
 		Boolean isAdmin = userRepository.checkIfAdminByUsername(username);
 		
 		if(Boolean.TRUE.equals(isAdmin)) {
-			return "ADMIN";
+			return new Role("ADMIN");
 		} else {
-			return "BUSINESS";
+			return new Role("BUSINESS");
 		}
 	}
 	

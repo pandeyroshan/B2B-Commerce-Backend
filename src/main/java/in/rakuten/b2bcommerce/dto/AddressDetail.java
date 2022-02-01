@@ -6,7 +6,7 @@ import lombok.Data;
 public class AddressDetail {
 	private Integer businessId;
 	private String contactPerson;
-	private String ContactPersonPhoneNumber;
+	private String contactPersonPhoneNumber;
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;

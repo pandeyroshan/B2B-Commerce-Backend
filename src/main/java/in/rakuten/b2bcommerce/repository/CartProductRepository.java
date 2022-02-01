@@ -24,4 +24,7 @@ public interface CartProductRepository extends JpaRepository<CartProduct, Intege
 	
 	@Query(value = "select total_quantity from cart_product c where c.cart_id=?1 and product_id=?2", nativeQuery=true)
 	Integer getProductQuantityOfProductInCart(Integer cartId, Integer productId);
+	
+	@Query(value = "select count(*) from cart_product c where c.cart_id=?1", nativeQuery = true)
+	Integer getTotalNumberOfItemsInCart(Integer cartId);
 }

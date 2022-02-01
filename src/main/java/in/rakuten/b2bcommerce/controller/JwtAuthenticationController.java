@@ -16,6 +16,7 @@ import in.rakuten.b2bcommerce.dto.BusinessDetail;
 import in.rakuten.b2bcommerce.dto.JwtRequest;
 import in.rakuten.b2bcommerce.dto.JwtResponse;
 import in.rakuten.b2bcommerce.dto.JwtToken;
+import in.rakuten.b2bcommerce.dto.Role;
 import in.rakuten.b2bcommerce.service.JwtUserDetailsService;
 import in.rakuten.b2bcommerce.service.UserService;
 import in.rakuten.b2bcommerce.utils.JwtTokenUtil;
@@ -37,9 +38,9 @@ public class JwtAuthenticationController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
+		
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
+		
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 
@@ -49,7 +50,7 @@ public class JwtAuthenticationController {
 	}
 	
 	@PostMapping("/get-role")
-	public String getUserRoleFromJwtToken(@RequestBody JwtToken jwtToken) {
+	public Role getUserRoleFromJwtToken(@RequestBody JwtToken jwtToken) {
 		return userService.getUserRoleFromJwtToken(jwtToken.getToken());
 	}
 	
