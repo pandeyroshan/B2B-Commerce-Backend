@@ -25,9 +25,10 @@ import in.rakuten.b2bcommerce.utils.JwtRequestFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] WHITELIST_URLS = {
-			"/**",
 			"/register-user",
-			"/login"
+			"/login",
+			"/get-role",
+			"/get-detail-from-token"
 	};
 	
 	@Autowired

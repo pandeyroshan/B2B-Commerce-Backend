@@ -63,6 +63,7 @@ public class ProductService {
 				);
 			}
 		}
+		System.out.println(allProductDetails);
 		return allProductDetails;
 	}
 	

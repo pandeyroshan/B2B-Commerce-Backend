@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import in.rakuten.b2bcommerce.dto.AdminDetail;
 import in.rakuten.b2bcommerce.dto.UserDetail;
 import in.rakuten.b2bcommerce.enums.BusinessStatus;
 import in.rakuten.b2bcommerce.model.Business;
@@ -47,6 +50,12 @@ public class UserController {
 		cartService.createCart(cart);
 		
 		return user.getId();
+	}
+	
+	@PostMapping("/create-admin")
+	public void createAdmin(@RequestBody AdminDetail adminDetail) {
+		User user = new User(adminDetail.getUsername(), "", bcryptEncoder.encode(adminDetail.getPassword()), true);
+		userService.saveOrUpdate(user);
 	}
 
 }
