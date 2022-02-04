@@ -3,6 +3,7 @@ package in.rakuten.b2bcommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,27 +27,32 @@ public class ProductController {
 	ProductService productService;
 
 	@PostMapping("/create-product")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Integer createProduct(@RequestBody Product product) {
 		productService.saveOrUpdate(product);
 		return product.getId();
 	}
 
 	@GetMapping("/all-products/{user_id}")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public List<ProductDetail> getAllProduct(@PathVariable("user_id") Integer userId) {
 		return productService.getAllProducts(userId);
 	}
 	
 	@GetMapping("/product/{productId}")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public Product getProductById(@PathVariable("productId") int productId) {
 		return productService.getProductById(productId);
 	}
 	
 	@DeleteMapping("/product/{productId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void deleteProduct(@PathVariable("productId") int productId) {
 		productService.deleteProductById(productId);
 	}
 	
 	@PutMapping("/product")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Product updateProduct(@RequestBody Product product) {
 		productService.saveOrUpdate(product);
 		return product;

@@ -3,6 +3,7 @@ package in.rakuten.b2bcommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,27 +24,31 @@ public class BusinessController {
 	BusinessService businessService;
 	
 	@GetMapping("/my-business/{businessId}")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public Business getMyBusiness(@PathVariable("businessId") int businessId) {
 		return businessService.getBusinessById(businessId);
 	}
 
 	@PostMapping("/update-business")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public void updateBusiness(@RequestBody BusinessUpdateDetail businessUpdateDetail) {
-		System.out.println("\n\n\nUPDATE CONTROLLER\n\n\n");
 		businessService.updateBusinessName(businessUpdateDetail);
 	}
 
 	@GetMapping("/approve-business/{businessId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void approveBusiness(@PathVariable("businessId") int businessId) {
 		businessService.approveBusiness(businessId);
 	}
 
 	@GetMapping("/reject-business/{businessId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void rejectBusiness(@PathVariable("businessId") int businessId) {
 		businessService.rejectBusiness(businessId);
 	}
 
 	@GetMapping("/all-business")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<Business> getAllBusiness() {
 		return businessService.getAllBusiness();
 	}

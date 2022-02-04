@@ -3,6 +3,7 @@ package in.rakuten.b2bcommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,26 +29,31 @@ public class CartController {
 	CartProductService cartProductService;
 	
 	@PostMapping("/add-to-cart")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public void addToCart(@RequestBody cartProductDetail cartProductDetail) {
 		cartService.addToCart(cartProductDetail);
 	}
 	
 	@PostMapping("/remove-from-cart")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public void removeFromCart(@RequestBody cartProductDetail cartProductDetail) {
 		cartService.removeFromCart(cartProductDetail);
 	}
 	
 	@PostMapping("/manage-quantity")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public void increaseProductQuantityInCart(@RequestBody ProductQuantityInCart productQuantityInCart) {
 		cartProductService.increaseProductQuantityInCart(productQuantityInCart);
 	}
 	
 	@GetMapping("/cart-details/{user_id}")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public List<CartProduct> getCartDetails(@PathVariable("user_id") Integer userId) {
 		return cartProductService.getCartProductByUserId(userId);
 	}
 	
 	@GetMapping("/total-item-in-cart/{cart_id}")
+	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public ItemCount getTotalNumberOfItemsInCart(@PathVariable("cart_id") Integer cartId) {
 		return cartProductService.getTotalNumberOfItemsInCart(cartId);
 	}

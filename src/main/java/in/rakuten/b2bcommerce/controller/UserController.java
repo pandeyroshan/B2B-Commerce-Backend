@@ -1,13 +1,12 @@
 package in.rakuten.b2bcommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import in.rakuten.b2bcommerce.dto.AdminDetail;
 import in.rakuten.b2bcommerce.dto.UserDetail;
@@ -53,6 +52,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/create-admin")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void createAdmin(@RequestBody AdminDetail adminDetail) {
 		User user = new User(adminDetail.getUsername(), "", bcryptEncoder.encode(adminDetail.getPassword()), true);
 		userService.saveOrUpdate(user);
