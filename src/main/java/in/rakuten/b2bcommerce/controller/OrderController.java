@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import in.rakuten.b2bcommerce.dto.BusinessId;
 import in.rakuten.b2bcommerce.dto.OrderSummaryDetail;
+import in.rakuten.b2bcommerce.dto.UpdateOrderStatus;
 import in.rakuten.b2bcommerce.model.OrderSummary;
 import in.rakuten.b2bcommerce.model.PurchaseDetail;
 import in.rakuten.b2bcommerce.service.OrderSummaryService;
@@ -43,14 +44,26 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order-details/{order_id}")
-	@PreAuthorize("hasRole('ROLE_BUSINESS')")
+	@PreAuthorize("hasAnyRole('ROLE_BUSINESS','ROLE_ADMIN')")
 	public OrderSummary getOrderDetails(@PathVariable("order_id") Integer orderId) {
 		return orderSummaryService.getOrderSummary(orderId);
 	}
 	
 	@GetMapping("/purchase-details/{order_id}")
-	@PreAuthorize("hasRole('ROLE_BUSINESS')")
+	@PreAuthorize("hasAnyRole('ROLE_BUSINESS','ROLE_ADMIN')")
 	public List<PurchaseDetail> getPurchaseDetails(@PathVariable("order_id") Integer orderId) {
 		return orderSummaryService.getPurchaseDetailByOrderId(orderId);
+	}
+	
+	@GetMapping("/all-orders")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public List<OrderSummary> getAllOrders() {
+		return this.orderSummaryService.getAllOrders();
+	}
+	
+	@PostMapping("/update-order-status")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void updateOrderStatus(@RequestBody UpdateOrderStatus updateOrderStatus) {
+		this.orderSummaryService.updateOrderStatus(updateOrderStatus);
 	}
 }

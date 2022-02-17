@@ -3,10 +3,13 @@ package in.rakuten.b2bcommerce.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import in.rakuten.b2bcommerce.dto.OrderSummaryDetail;
+import in.rakuten.b2bcommerce.dto.UpdateOrderStatus;
 import in.rakuten.b2bcommerce.enums.OrderStatus;
 import in.rakuten.b2bcommerce.model.Address;
 import in.rakuten.b2bcommerce.model.Business;
@@ -86,5 +89,14 @@ public class OrderSummaryService {
 	public List<PurchaseDetail> getPurchaseDetailByOrderId(Integer orderId) {
 		List<PurchaseDetail> purchaseDetailByOrderId = purchaseDetailRepository.findByOrderSummaryId(orderId);
 		return purchaseDetailByOrderId;
+	}
+	
+	public List<OrderSummary> getAllOrders() {
+		return this.orderSummaryRepository.findAll();
+	}
+	
+	@Transactional
+	public void updateOrderStatus(UpdateOrderStatus updateOrderStatus) {
+		this.orderSummaryRepository.UpdateOrderStatus(updateOrderStatus.getOrderId(), updateOrderStatus.getOrderStatus());
 	}
 }

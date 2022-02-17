@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.rakuten.b2bcommerce.dto.ProductDetail;
+import in.rakuten.b2bcommerce.dto.ProductStatus;
 import in.rakuten.b2bcommerce.model.Product;
 import in.rakuten.b2bcommerce.service.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -38,25 +39,35 @@ public class ProductController {
 	public List<ProductDetail> getAllProduct(@PathVariable("user_id") Integer userId) {
 		return productService.getAllProducts(userId);
 	}
-	
+
 	@GetMapping("/product/{productId}")
 	@PreAuthorize("hasRole('ROLE_BUSINESS')")
 	public Product getProductById(@PathVariable("productId") int productId) {
 		return productService.getProductById(productId);
 	}
-	
+
 	@DeleteMapping("/product/{productId}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void deleteProduct(@PathVariable("productId") int productId) {
 		productService.deleteProductById(productId);
 	}
-	
+
 	@PutMapping("/product")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Product updateProduct(@RequestBody Product product) {
 		productService.saveOrUpdate(product);
 		return product;
 	}
+
+	@GetMapping("/admin-all-products")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public List<Product> getAllProductForAdmin() {
+		return this.productService.getAllProductForAdmin();
+	}
 	
-	
+	@PostMapping("/change-visibilty")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public void changeProductVisibility(@RequestBody ProductStatus productStatus) {
+		this.productService.changeProductVisibility(productStatus.getProductId(), productStatus.getStatus());
+	}
 }
