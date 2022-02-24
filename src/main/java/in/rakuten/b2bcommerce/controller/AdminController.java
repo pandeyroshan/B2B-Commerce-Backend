@@ -21,4 +21,6 @@ public class AdminController {
 	public AdminTilesInfo getAdminInformation() {
 		return adminService.getAdminTileInformation();
 	}
+	
+	
 }
